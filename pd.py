@@ -39,6 +39,14 @@ persons_create_parser.add_argument("--email")
 persons_create_parser.add_argument("--phone")
 persons_create_parser.add_argument("--org-id", type=int)
 
+organization_parser = root_subparsers.add_parser("organizations")
+organization_subparsers = organization_parser.add_subparsers(
+    required=True, dest="command2"
+)
+
+organization_create_parser = organization_subparsers.add_parser("create")
+organization_create_parser.add_argument("--name", required=True)
+
 args = root_parser.parse_args()
 
 
@@ -76,8 +84,13 @@ def persons_create():
     )
 
 
+def organizations_create():
+    pipedrive.create_organizations({"name": args.name})
+
+
 {
     ("deals", "create"): deals_create,
     ("products", "create"): products_create,
     ("persons", "create"): persons_create,
+    ("organizations", "create"): organizations_create,
 }[(args.command, args.command2)]()
