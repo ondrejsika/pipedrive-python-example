@@ -30,6 +30,14 @@ products_create_parser.add_argument("--name", required=True)
 products_create_parser.add_argument("--price", required=True, type=int)
 products_create_parser.add_argument("--currency", required=True)
 
+persons_parser = root_subparsers.add_parser("persons")
+persons_subparsers = persons_parser.add_subparsers(required=True, dest="command2")
+
+persons_create_parser = persons_subparsers.add_parser("create")
+persons_create_parser.add_argument("--name", required=True)
+persons_create_parser.add_argument("--email")
+persons_create_parser.add_argument("--phone")
+persons_create_parser.add_argument("--org-id", type=int)
 
 args = root_parser.parse_args()
 
@@ -57,6 +65,19 @@ def products_create():
     )
 
 
-{("deals", "create"): deals_create, ("products", "create"): products_create,}[
-    (args.command, args.command2)
-]()
+def persons_create():
+    pipedrive.create_persons(
+        {
+            "name": args.name,
+            "email": args.email,
+            "phone": args.phone,
+            "org_id": args.org_id,
+        },
+    )
+
+
+{
+    ("deals", "create"): deals_create,
+    ("products", "create"): products_create,
+    ("persons", "create"): persons_create,
+}[(args.command, args.command2)]()
