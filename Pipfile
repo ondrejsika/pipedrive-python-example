@@ -8,7 +8,7 @@ pylint = "*"
 black = "*"
 
 [packages]
-python-pipedrive = "*"
+pipedrive = "*"
 
 [requires]
 python_version = "3.7"

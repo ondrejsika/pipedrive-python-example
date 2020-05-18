@@ -29,14 +29,13 @@ pipedrive = Pipedrive(args.token)
 
 
 def deals_create():
-    pipedrive.deals(
+    pipedrive.create_deals(
         {
             "title": args.title,
             "value": args.value,
             "currency": args.currency,
             "status": "open",
         },
-        method="POST",
     )
 
 
